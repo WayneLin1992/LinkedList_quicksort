@@ -1,4 +1,5 @@
 #include "LinkedList_quicksort.h"
+#include <time.h>
 
 static bool list_is_ordered(node_t *list) {
     bool first = true;
@@ -25,13 +26,13 @@ static void list_display(node_t *list) {
     }
     printf("\n");
 }
-
+/*
 int random(void){
      int a;
     a = rand();
     return a;
 }
-
+*/
 static void list_free(node_t **list){
     node_t *ptr = *list;
     while(*list){
@@ -54,9 +55,8 @@ static inline node_t* list_make_node_t(node_t *list, int num){
 }
 
 int main(int argc, char **argv) {
-
     size_t count = 20;
-
+    srandom(time(NULL));
     node_t *list = NULL;
     while (count--)
         list = list_make_node_t(list, random() % 1024);
