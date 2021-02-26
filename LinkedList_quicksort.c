@@ -54,6 +54,48 @@ static inline node_t* list_make_node_t(node_t *list, int num){
     return list;
 }
 
+void quicksort_nonrecursive(node_t **list){
+    node_t *ptr = *list;
+    int arr[20] ;
+    int j = 0;
+    while(ptr){
+        arr[j++] = ptr->value;
+        ptr = ptr->next;
+    }
+
+    int element = 20;
+
+    int  piv, beg[element], end[element], i=0, L, R ;
+    beg[0]=0; end[0]=element;
+    while (i>=0) {
+        L=beg[i]; R=end[i]-1;
+        if (L<R) {
+          piv=arr[L]; if (i==element-1) return ;
+          while (L<R) {
+            while (arr[R]>=piv && L<R)
+                R--;
+            if (L<R)
+                arr[L++]=arr[R];
+            while (arr[L]<=piv && L<R)
+                L++;
+            if (L<R)
+                arr[R--]=arr[L]; }
+          arr[L]=piv;
+          beg[i+1]=L+1;
+          end[i+1]=end[i];
+          end[i++]=L;
+          }
+        else {
+          i--; }
+    }
+    node_t*ptr1 = *list;
+    i = 0;
+    while(ptr1){
+        ptr1->value = arr[i++];
+        ptr1 = ptr1->next;
+    }
+}
+
 int main(int argc, char **argv) {
     size_t count = 20;
     srandom(time(NULL));
@@ -62,7 +104,8 @@ int main(int argc, char **argv) {
         list = list_make_node_t(list, random() % 1024);
 
     list_display(list);
-    quicksort(&list);
+    quicksort_nonrecursive(&list);
+//    quicksort(&list);
     list_display(list);
 
     if (!list_is_ordered(list))
